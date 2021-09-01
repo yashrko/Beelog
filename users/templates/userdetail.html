@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <img
+          class="bd-placeholder-img rounded-circle"
+          width="140"
+          height="140"
+          src="{{object.profile.image.url}}"
+          role="img"
+          aria-label="Placeholder: 140x140"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+        />
+        </div>
+        <div class="col-8">
+         <h2>{{object.username}}</h2>
+        <p>
+          {{object.first_name}} {{object.last_name}}
+        </p>
+        <p>
+        {% if user == object %}
+            <a class="btn btn-secondary" href="{% url 'user-update-view' user.id %}">Edit Profile »</a></p>
+        {% else %}
+        {% endif %}
+      </div>
+      </div>
+{% endblock content %}
+{% block middle %}
+    <h2>Blogs TimeLine</h2>
+  <div class="row ms-1">
+  {% if object.article_set.all|length == 0 %}
+  No Blogs to Display
+  {% endif %}
+      {% for article in object.article_set.all %}
+      <div class="col-md-6">
+        <div
+          class="
+            row
+            g-0
+            border
+            rounded
+            overflow-hidden
+            flex-md-row
+            my-1
+            shadow-sm
+            position-relative
+          "
+        >
+        <a href="{% url 'detail-view' article.id %}" class="link-tag" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;z-index:1"></a>
+          <div class="col p-4 d-flex flex-column position-static">
+            <div class="row">
+            <img class="bd-placeholder-img rounded-circle col-2" width="40" height="40" src="{{article.author.profile.image.url}}" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"/>
+            <strong class="d-inline-block mt-1 text-primary col-8" style="z-index:3">
+            <a href="{% url 'user-detail-view' article.author.id %}" >{{article.author.username}}</a></strong>
+             </div>
+            <h3 class="mb-0">{{article.title}}</h3>
+            <div class="mb-1 text-muted">{{article.date_posted|date:'d,M'}}</div>
+            <p class="card-text mb-auto">{{article.description}}</p>
+          </div>
+          <div class="col-auto d-none d-lg-block">
+          <img src="{{article.article_image.url}}" width="200px" height="100%"/>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+{% endblock middle %}
+{% block sidebar %}
+    <a href="/home" class="list-group-item list-group-item-action">Home</a>
+    {% if user.id %}
+        <a href="{% url 'user-detail-view' user.id  %}" class="list-group-item list-group-item-action">My Profile</a>
+    {% endif %}
+    <a href="{% url 'create-view' %}" class="list-group-item list-group-item-action">Create a Blog</a>
+{% endblock sidebar %}
+

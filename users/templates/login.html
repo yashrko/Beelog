@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div style="height:100%">
+<div class="container">
+<form method="POST">
+{% csrf_token %}
+{{ form|crispy }}
+<input class="btn btn-primary my-3" type="submit" value="Log in"/>
+</form>
+Need an Account ? <a class="btn btn-outline-secondary" href={% url 'signup-view' %}> Sign Up</a>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %}
+{% for obj in object_list %}
+<div class="row">
+   <div
+      class="
+      row
+      g-0
+      border
+      rounded
+      overflow-hidden
+      flex-md-row
+      my-1
+      ms-3
+      shadow-sm
+      position-relative
+      "
+      >
+         <div class="col p-4 d-flex flex-column position-static">
+         <a href="{% url 'detail-view' obj.id %}" class="link-tag" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;z-index:1"></a>
+         <div class="row">
+            <img class="bd-placeholder-img rounded-circle col-2" width="40" height="40" src="{{obj.author.profile.image.url}}" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"/>
+            <strong class="d-inline-block mt-1 text-primary col-8" style="z-index:3">
+            <a href="{% url 'user-detail-view' obj.author.id %}" >{{obj.author.username}}</a></strong>
+      </div>
+      <h3 class="mb-0">{{obj.title}}</h3>
+      <div class="mb-1 text-muted">{{obj.date_posted|date:'d,M'}}</div>
+      <p class="card-text mb-auto">{{obj.description}}</p>
+      </div>
+      <div class="col-auto d-none d-lg-block">
+         <img src="{{obj.article_image.url}}" width="200px" height="100%"/>
+      </div>
+   </div>
+</div>
+{% endfor %}
+{% endblock content %}
+{% block sidebar %}
+<a href="/home" class="list-group-item list-group-item-action">Home</a>
+{% if user.id  %}
+<a href="{% url 'user-detail-view' user.id %}" class="list-group-item list-group-item-action">My Profile</a>
+{% elif user.id %}
+
+{% endif %}
+<a href="{% url 'create-view' %}" class="list-group-item list-group-item-action">Create a Blog</a>
+{% endblock sidebar %}

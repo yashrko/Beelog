@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div style="height:100%">
+<div class="container">
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+Are you sure you want to delete post ?<br>
+<input class="btn btn-warning my-3" type="submit" value="Yes"/>
+<a class="btn btn-secondary my-3" href="../">No</a>
+</form>
+</div>
+</div>
+{% endblock content %}
